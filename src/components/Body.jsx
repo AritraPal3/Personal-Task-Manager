@@ -10,6 +10,12 @@ export default function Body() {
     // if(stored || stored.length) stored=[]
     const [arr, setArr] = useState([]);
 
+    const getData = async () => {
+        let stored = await JSON.parse(localStorage.getItem("array"))
+        console.log("calling useEffect" +stored)
+        setArr(Array.isArray(stored) && stored.length > 0 ? stored : [])
+    }
+
     function handleInputData(data) {
         //by creating a shallow copy React re-renders the component even if the data was same as previous
         const val = [...data] //👌👌👌👌 enables re-rendering
@@ -18,15 +24,13 @@ export default function Body() {
         // console.log(data)
     }
 
-    //for useEffect alaways stringify the array in the depenedecy array
-    // useEffect(() => {
-    //     const getData = async () => {
-    //         let stored = await JSON.parse(localStorage.getItem("array"))
-    //         console.log("calling useEffect" +stored)
-    //         setArr(Array.isArray(stored) && stored.length > 0 ? stored : [])
-    //     }
-    //     //getData()
-    // }, [JSON.stringify(arr)])
+    //for useEffect alaways stringify the array in the depenedecy array to prevent infinite re-rendering 🔥🔥🔥🔥🔥
+    useEffect(() => {
+        // let stored = JSON.parse(localStorage.getItem("array"))
+        // console.log("calling useEffect" +stored)
+        // setArr(Array.isArray(stored) && stored.length > 0 ? stored : [])
+        getData() // will be called once since no dependecy
+    }, [])
 
     return (
         <Container style={custome_styling}>
