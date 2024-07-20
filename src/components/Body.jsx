@@ -11,7 +11,8 @@ export default function Body() {
     const [arr, setArr] = useState([]);
 
     function handleInputData(data) {
-        const val = [...data]
+        //by creating a shallow copy React re-renders the component even if the data was same as previous
+        const val = [...data] //👌👌👌👌 enables re-rendering
         setArr(val)
         localStorage.setItem("array", JSON.stringify(data))
         // console.log(data)
