@@ -6,21 +6,26 @@ import { useEffect, useState } from 'react';
 
 export default function Body() {
     let custome_styling = { paddingLeft: "25%", paddingRight: "25%", marginTop: "10%" }
-    
+
     // if(stored || stored.length) stored=[]
     const [arr, setArr] = useState([]);
 
     function handleInputData(data) {
-        setArr(data)
+        const val = [...data]
+        setArr(val)
         localStorage.setItem("array", JSON.stringify(data))
         // console.log(data)
     }
 
-    useEffect(()=>{
-        let stored = JSON.parse(localStorage.getItem("array"))
-        console.log("calling useEffect")
-        setArr(Array.isArray(stored) && stored.length > 0 ? stored : [])
-    },[arr])
+    //for useEffect alaways stringify the array in the depenedecy array
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         let stored = await JSON.parse(localStorage.getItem("array"))
+    //         console.log("calling useEffect" +stored)
+    //         setArr(Array.isArray(stored) && stored.length > 0 ? stored : [])
+    //     }
+    //     //getData()
+    // }, [JSON.stringify(arr)])
 
     return (
         <Container style={custome_styling}>
