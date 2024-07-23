@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 export default function Body() {
-    let custome_styling = { paddingLeft: "15%", paddingRight: "15%", marginTop: "8%", paddingBottom: "5%" }
+    let custome_styling = { paddingLeft: "15%", paddingRight: "15%", marginTop: "8%", paddingBottom: "5%", overflow:"auto" }
 
     // if(stored || stored.length) stored=[]
     const [arr, setArr] = useState([]);

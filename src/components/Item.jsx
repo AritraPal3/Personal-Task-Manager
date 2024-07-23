@@ -5,10 +5,23 @@ import { faPenAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 
 export default function Item({ id, status, name, cpDate, ctDate, modifyArray, taskList, setEditStatus, setEditId, setInputBar }) {
+    
+    let index=getIndex();
+    function getData()
+    {
+        let data = taskList.find(item=>item.id==id)
+        return  data;
+    }
+    
+    function getIndex()
+    {
+        let index = (item)=>item.id==id
+        return taskList.findIndex(index)
+    }
 
     function handleDeleteBtn() {
         if (window.confirm("Do You Really Want to Delete this Task")) {
-            const updatedTaskList = taskList.filter((_, index) => index !== id);
+            const updatedTaskList = taskList.filter((index) => index.id !== id);
             modifyArray(updatedTaskList);
             setInputBar("")
         }
@@ -18,20 +31,21 @@ export default function Item({ id, status, name, cpDate, ctDate, modifyArray, ta
         setEditStatus(1)
         const editId = id;
         setEditId(editId)
-        setInputBar(taskList[id].taskName)
+        setInputBar(taskList[index].taskName)
     }
     // console.log(taskList)
 
     function onClick(e) {
         let st = e.target.innerHTML
-        taskList[id].taskStatus = st
+        let obj=getData();
+        taskList[index].taskStatus = st
         if (st == "Completed") {
             const d = new Date();
             let date = (d.toString()).slice(0, 15);
-            taskList[id].completionDate = date
+            taskList[index].completionDate = date
         }
         else {
-            taskList[id].completionDate = "--"
+            taskList[index].completionDate = "--"
         }
         const updatedTaskList = taskList
         modifyArray(taskList)

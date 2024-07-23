@@ -21,7 +21,7 @@ export default function TaskManager({ tasks, modifyTasks, setEditStatus, setEdit
                         </thead>
                         <tbody id="content">
                             {tasks.map((task, i) => {
-                                return (<Item key={i} id={i} ctDate={task.creationDate} status={task.taskStatus} cpDate={task.completionDate} name={task.taskName} modifyArray={modifyTasks} taskList={tasks} setEditStatus={setEditStatus} setEditId={setEditId} setInputBar={setInputBar} />)
+                                return (<Item key={i} id={task.id} ctDate={task.creationDate} status={task.taskStatus} cpDate={task.completionDate} name={task.taskName} modifyArray={modifyTasks} taskList={tasks} setEditStatus={setEditStatus} setEditId={setEditId} setInputBar={setInputBar} />)
                             })}
                         </tbody>
                     </Table>

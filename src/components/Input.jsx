@@ -1,10 +1,25 @@
 import React from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Input({ input_val, setInputVal, addItem, itemList, editStatus, editId, setEditId, setEditStatus }) {
 
+    let index=getIndex();
+    function getData()
+    {
+        let data = itemList.find(item=>item.id==editId)
+        return  data;
+    }
+    
+    function getIndex()
+    {
+        let index = (item)=>item.id==editId
+        return itemList.findIndex(index)
+    }
+
     let new_entry = {
+        id:"",
         creationDate: "",
         taskName: "",
         taskStatus: "",
@@ -33,6 +48,7 @@ export default function Input({ input_val, setInputVal, addItem, itemList, editS
         if (editStatus == 0) {
             if (input_val && input_val.length !== 0) {
 
+                new_entry.id=uuidv4();
                 //set the entry details before pushing
                 new_entry.taskName = input_val;
                 new_entry.taskStatus = "To-do"
@@ -48,7 +64,8 @@ export default function Input({ input_val, setInputVal, addItem, itemList, editS
         }
         else {
             if (input_val && input_val.length !== 0) {
-                itemList[editId].taskName = input_val
+                let editIndex=getIndex()
+                itemList[editIndex].taskName = input_val
                 addItem(itemList);
                 setInputVal("")
                 setEditId(-1)
@@ -76,7 +93,7 @@ export default function Input({ input_val, setInputVal, addItem, itemList, editS
                     <Button className="btn-primary" style={gaping} onClick={Save}>Save</Button>
                 </Link>
                 <Link to="/">
-                    <Button className="btn-info" style={gaping}>GO BACK</Button>
+                    <Button className="btn-info" style={gaping}>BACK</Button>
                 </Link>
                 <Button className="btn-light d-none" style={gaping} onClick={Cancel}>Cancel</Button>
             </Container>
