@@ -1,6 +1,6 @@
 # My Personal Task Manger
 
-##Introduction
+## **Introduction**
 This is a simple Task Manager built using React and Node Express where you can manage your own activities based on how critical it is and will also be notified about any changes and deadlines that are approaching
 --
 ##Features
