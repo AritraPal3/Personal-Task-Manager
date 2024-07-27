@@ -78,7 +78,7 @@ export default function Input({ error, alert, input_val, setInputVal, addItem, i
                 addItem(itemList);
 
                 const headers = { "Content-Type": "application/json", };
-                const url = "http://localhost:8000/todo/save";
+                const url = "https://backend-api-for-todolist.onrender.com/todo/save";
                 axios.post(url, { id: new_entry.id, taskName: new_entry.taskName, deadlineDate: new_entry.deadlineDate, creationDate: new_entry.creationDate, taskStatus: new_entry.taskStatus, completionDate: new_entry.completionDate }, { headers })
                     .then((res) => {
                         console.log(res.status)
@@ -105,7 +105,7 @@ export default function Input({ error, alert, input_val, setInputVal, addItem, i
                 itemList[editIndex].taskName = input_val.text
                 addItem(itemList);
                 const headers = { "Content-Type": "application/json", };
-                const url = "http://localhost:8000/todo/edit";
+                const url = "https://backend-api-for-todolist.onrender.com/todo/edit";
                 axios.post(url, { id: editId, val: input_val.text, date:input_val.date }, { headers })
                     .then((res) => {
                         console.log(res)

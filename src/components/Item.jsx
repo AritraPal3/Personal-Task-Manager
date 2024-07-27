@@ -32,7 +32,7 @@ export default function Item({ remove, id, status, name, dlDate, cpDate, ctDate,
             modifyArray(updatedTaskList);
 
             const headers = { "Content-Type": "application/json", };
-            const url = "http://localhost:8000/todo/delete"
+            const url = "https://backend-api-for-todolist.onrender.com/todo/delete"
             axios.post(url, { id: id }, { headers })
             remove("Task Has Been deleted successfully");
             setInputBar("")
@@ -51,7 +51,7 @@ export default function Item({ remove, id, status, name, dlDate, cpDate, ctDate,
     function onClick(e) {
 
         const headers = { "Content-Type": "application/json" };
-        const url = "http://localhost:8000/todo/editStatus"
+        const url = "https://backend-api-for-todolist.onrender.com/todo/editStatus"
 
         let st = e.target.innerHTML
         // let obj = getData();

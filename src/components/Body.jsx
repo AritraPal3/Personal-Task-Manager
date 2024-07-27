@@ -50,7 +50,7 @@ export default function Body() {
             "Content-Type": "application/json",
         };
         console.log(options)
-        const url = `http://localhost:8000/todo/show`;
+        const url = `https://backend-api-for-todolist.onrender.com/todo/show`;
         let { data } = await axios.get(url,{params:options}, { headers })
         console.log(`API CALLED by ${url}`)
 
