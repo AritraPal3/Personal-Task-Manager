@@ -3,19 +3,26 @@ import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
+import axios from 'axios'
 
-export default function Item({ id, status, name, cpDate, ctDate, modifyArray, taskList, setEditStatus, setEditId, setInputBar }) {
-    
-    let index=getIndex();
-    function getData()
+export default function Item({ remove, id, status, name, dlDate, cpDate, ctDate, modifyArray, taskList, setEditStatus, setEditId, setInputBar }) {
+
+    //testing row colouring based on deadline date
+    let deadline=""
+    if(dlDate <=`${new Date().toLocaleDateString("sv-SE")}` && (cpDate === "--")) 
     {
-        let data = taskList.find(item=>item.id==id)
-        return  data;
+        deadline="table-danger";
     }
-    
-    function getIndex()
-    {
-        let index = (item)=>item.id==id
+
+    let index = getIndex();
+
+    function getData() {
+        let data = taskList.find(item => item.id == id)
+        return data;
+    }
+
+    function getIndex() {
+        let index = (item) => item.id == id
         return taskList.findIndex(index)
     }
 
@@ -23,6 +30,11 @@ export default function Item({ id, status, name, cpDate, ctDate, modifyArray, ta
         if (window.confirm("Do You Really Want to Delete this Task")) {
             const updatedTaskList = taskList.filter((index) => index.id !== id);
             modifyArray(updatedTaskList);
+
+            const headers = { "Content-Type": "application/json", };
+            const url = "http://localhost:8000/todo/delete"
+            axios.post(url, { id: id }, { headers })
+            remove("Task Has Been deleted successfully");
             setInputBar("")
         }
     }
@@ -31,13 +43,18 @@ export default function Item({ id, status, name, cpDate, ctDate, modifyArray, ta
         setEditStatus(1)
         const editId = id;
         setEditId(editId)
-        setInputBar(taskList[index].taskName)
+        setInputBar({text:taskList[index].taskName,date:`${new Date(`${taskList[index].deadlineDate}`).toLocaleDateString("sv-SE")}`})
+        // setInputBar(taskList[index].taskName)
     }
     // console.log(taskList)
 
     function onClick(e) {
+
+        const headers = { "Content-Type": "application/json" };
+        const url = "http://localhost:8000/todo/editStatus"
+
         let st = e.target.innerHTML
-        let obj=getData();
+        // let obj = getData();
         taskList[index].taskStatus = st
         if (st == "Completed") {
             const d = new Date();
@@ -47,14 +64,30 @@ export default function Item({ id, status, name, cpDate, ctDate, modifyArray, ta
         else {
             taskList[index].completionDate = "--"
         }
-        const updatedTaskList = taskList
+        let date = taskList[index].completionDate
+        //making api call
+        axios.post(url, { id: id, taskStatus: st, completionDate: date }, { headers })
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        // const updatedTaskList = taskList
         modifyArray(taskList)
     }
 
+    const taskId=()=>{
+        return (`TASK - #${index}`)
+    }
+
     return (
-        <tr id={id} className="text-center">
+        <tr id={id} className={`text-center ${deadline}`}>
+            <td>{taskId()}</td>
             <td>{ctDate}</td>
             <td> {name}</td>
+            <td>{dlDate.slice(0,10)}</td>
             <td>
                 <Dropdown>
                     <Dropdown.Toggle variant="warning" id="dropdown-basic">

@@ -26,10 +26,6 @@ export default function Edit({ itemList,addItem }) {
 
 
     useEffect(() => {
-        if(id>=itemList.length)
-        {
-            console.log("OUT OF BOUNDS")
-        }
         setInputVal(taskName)
     }, [])
 
