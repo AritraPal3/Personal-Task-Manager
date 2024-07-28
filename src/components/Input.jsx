@@ -132,7 +132,7 @@ export default function Input({ error, alert, input_val, setInputVal, addItem, i
     }
 
     function Cancel() {
-        setInputVal("");
+        setInputVal(defaultVal);
         setEditId(-1)
         setEditStatus(0)
     }
